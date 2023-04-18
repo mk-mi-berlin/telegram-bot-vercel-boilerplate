@@ -13,6 +13,10 @@ const bot = new Telegraf(BOT_TOKEN);
 bot.command('about', about());
 bot.on('message', greeting());
 
+bot.on('photo', async (ctx) => {
+  ctx.reply("asd");
+});
+
 //prod mode (Vercel)
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
   await production(req, res, bot);
