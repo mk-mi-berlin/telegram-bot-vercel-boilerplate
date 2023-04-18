@@ -11,12 +11,14 @@ const ENVIRONMENT = process.env.NODE_ENV || '';
 const bot = new Telegraf(BOT_TOKEN);
 
 bot.command('about', about());
-//bot.on('message', greeting());
+
 
 bot.on('photo', async (ctx) => {
   console.log("photo log");
-  ctx.reply("asd");
+  ctx.reply("asd: " + JSON.stringify(ctx));
 });
+
+bot.on('message', greeting());
 
 //prod mode (Vercel)
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
