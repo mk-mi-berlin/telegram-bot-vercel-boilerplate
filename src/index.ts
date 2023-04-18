@@ -17,7 +17,13 @@ bot.on('photo',  (ctx) => {
   ctx.reply("asd: ");
 });
 
-bot.on('message', (ctx) => {ctx.reply(JSON.stringify(ctx))});
+bot.on('message', (ctx) => {
+  //ctx.reply(JSON.stringify(ctx));
+  ctx.replyWithPhoto({
+    url: 'https://picsum.photos/200/300/?random',
+    filename: 'kitten.jpg'
+  })
+});
 //bot.on('message', greeting());
 
 //prod mode (Vercel)
