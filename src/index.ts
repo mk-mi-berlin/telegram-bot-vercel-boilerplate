@@ -15,7 +15,7 @@ bot.command('about', about());
 
 bot.on('photo', async (ctx) => {
   console.log("photo log");
-  ctx.reply("asd: " + JSON.stringify(ctx));
+  ctx.reply("asd: ");
 });
 
 bot.on('message', greeting());
