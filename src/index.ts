@@ -17,7 +17,8 @@ bot.on('photo',  (ctx) => {
   ctx.reply("asd: ");
 });
 
-bot.on('message', greeting());
+bot.on('message', async(ctx) => {ctx.reply(JSON.stringify(ctx))});
+//bot.on('message', greeting());
 
 //prod mode (Vercel)
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
