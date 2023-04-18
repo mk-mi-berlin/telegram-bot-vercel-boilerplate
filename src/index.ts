@@ -11,7 +11,7 @@ const ENVIRONMENT = process.env.NODE_ENV || '';
 const bot = new Telegraf(BOT_TOKEN);
 
 bot.command('about', about());
-bot.on('message', greeting());
+//bot.on('message', greeting());
 
 bot.on('photo', async (ctx) => {
   console.log("photo log");
