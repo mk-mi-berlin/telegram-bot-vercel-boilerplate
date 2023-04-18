@@ -18,7 +18,7 @@ bot.on('photo',  (ctx) => {
 });
 
 bot.on('message', (ctx) => {
-  ctx.reply(JSON.stringify({asd: "adijfdijfij"}));
+  ctx.reply(JSON.stringify(ctx));
   /*ctx.replyWithPhoto({
     url: 'https://picsum.photos/200/300/?random',
     filename: 'kitten.jpg'
