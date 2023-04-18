@@ -12,10 +12,9 @@ const bot = new Telegraf(BOT_TOKEN);
 
 bot.command('about', about());
 
-
-bot.on('photo', async (ctx) => {
+bot.on('photo',  (ctx) => {
   console.log("photo log");
-  ctx.reply("asd: " + JSON.stringify(ctx));
+  ctx.reply("asd: ");
 });
 
 bot.on('message', greeting());
