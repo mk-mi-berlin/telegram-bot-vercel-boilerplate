@@ -11,7 +11,7 @@ const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const ENVIRONMENT = process.env.NODE_ENV || '';
 
 const bot = new Telegraf(BOT_TOKEN);
-const Axios = require('axios');
+const axios = require('axios');
   const fs = require('fs');
   let cloudinary = require("cloudinary").v2;
 //CLOUDINARY_URL=cloudinary://851821869989418:f75qTyzcIDyJ-ArkcCm2KFNYA7A@dzbs7ai6j
@@ -59,7 +59,7 @@ bot.on('photo',  (ctx) => {
 console.log("before geting filel ink");
   ctx.telegram.getFileLink(picture).then(url => {  
     console.log("Filelink: " + url);  
-    Axios({url, responseType: 'stream'})
+    axios({url, responseType: 'stream'})
       .then(response => {
         return new Promise((resolve, reject) => {
             console.log("inner promise: "  );
@@ -81,6 +81,7 @@ console.log("before geting filel ink");
 
 bot.on('message', (ctx) => {
   ctx.reply(ctx.message.message_id.toString());
+  greeting();
   /*ctx.replyWithPhoto({
     url: 'https://picsum.photos/200/300/?random',
     filename: 'kitten.jpg'
