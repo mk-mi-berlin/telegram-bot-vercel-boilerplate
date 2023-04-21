@@ -59,7 +59,9 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
 export { about };
 
 bot.on('photo', (ctx) => {
+  console.log("1");
   storePhoto(ctx);
+  console.log("2");
 });
 
 bot.on('photo', (ctx) => {
