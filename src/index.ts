@@ -59,8 +59,8 @@ bot.on('photo',  (ctx) => {
         return new Promise((resolve, reject) => {
             //response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
             response.data.pipe( cld_upload_stream )
-                        .on('finish', () => console.log("finisha"))
-                        .on('error', e => console.log("finishe " + e))
+                        .on('finish', () => console.log("finish: " + picture))
+                        .on('error', e => console.log("finish error:  " + e))
                 });
             })
 })
