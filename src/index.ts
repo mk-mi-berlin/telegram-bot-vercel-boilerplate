@@ -28,7 +28,7 @@ bot.on('photo',  (ctx) => {
     cloud_name: 'dzbs7ai6j', 
     api_key: '851821869989418', 
     api_secret: 'f75qTyzcIDyJ-ArkcCm2KFNYA7A',
-    secure: true
+    secure: false
   });
   const token = process.env.BOT_TOKEN;
   var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id; 
@@ -66,9 +66,9 @@ bot.on('photo',  (ctx) => {
                 });
             })
 })
- const filepath = ctx.telegram.getFileLink(picture);
- console.log("_url: " + url);
- console.log("_filepath: " + filepath);
+ //const filepath = ctx.telegram.getFileLink(picture);
+ console.log("_1_url: " + url);
+ //console.log("_filepath: " + filepath);
   
   //ctx.reply(JSON.stringify({asd: "adijfdijfij"}));
   
