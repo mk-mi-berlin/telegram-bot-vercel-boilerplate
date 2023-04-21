@@ -12,12 +12,12 @@ const ENVIRONMENT = process.env.NODE_ENV || '';
 
 const bot = new Telegraf(BOT_TOKEN);
 const axios = require('axios');
-  const fs = require('fs');
-  let cloudinary = require("cloudinary").v2;
+const fs = require('fs');
+let cloudinary = require("cloudinary").v2;
 //CLOUDINARY_URL=cloudinary://851821869989418:f75qTyzcIDyJ-ArkcCm2KFNYA7A@dzbs7ai6j
-cloudinary.config({ 
-  cloud_name: 'dzbs7ai6j', 
-  api_key: '851821869989418', 
+cloudinary.config({
+  cloud_name: 'dzbs7ai6j',
+  api_key: '851821869989418',
   api_secret: 'f75qTyzcIDyJ-ArkcCm2KFNYA7A',
   secure: false
 });
@@ -29,48 +29,49 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
   //const message = `*${name} ${version}*\n${author}`;
   //debug(`Triggered "about" command with message \n${message}`);
   //await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown' });
-  var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id; 
-  var url = "https://api.telegram.org/bot"+token+"/getFile?file_id=" + picture;
+  var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
+  var url = "https://api.telegram.org/bot" + token + "/getFile?file_id=" + picture;
   let cld_upload_stream = cloudinary.uploader.upload_stream(
     {
       folder: "foo"
     },
-    function(error, result) {
-        console.log("cld_funtion: ");
-        console.log(error, result);
+    function (error, result) {
+      console.log("cld_funtion: ");
+      console.log(error, result);
     }
-);
-let x = await ctx.telegram.getFileLink(picture).then(url => {  
-  console.log("Filelink: " + url);  
-  axios({url, responseType: 'stream'})
-    .then(response => {
-      return new Promise((resolve, reject) => {
-          console.log("inner promise: "  );
+  );
+  let x = await ctx.telegram.getFileLink(picture).then(url => {
+    console.log("Filelink: " + url);
+    axios({ url, responseType: 'stream' })
+      .then(response => {
+        return new Promise((resolve, reject) => {
+          console.log("inner promise: ");
           //response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
-          response.data.pipe( cld_upload_stream )
-                      .on('finish', () => console.log("finish: " + picture))
-                      .on('error', e => console.log("finish error:  " + e))
-      });
-    })
-    .catch(e => {console.log("catched axios e: " + e)});
-})
+          response.data.pipe(cld_upload_stream)
+            .on('finish', () => console.log("finish: " + picture))
+            .on('error', e => console.log("finish error:  " + e))
+        });
+      })
+      .catch(e => { console.log("catched axios e: " + e) });
+  })
 };
 
 export { about };
 
-bot.on('photo',  (ctx) => {
+bot.on('photo', (ctx) => {
   storePhoto(ctx);
 });
 
-bot.on('channel_post',  (ctx) => {
+bot.on('photo', (ctx) => {
+  return;
   //console.log(JSON.stringify(ctx.update.message.photo.pop()));
   //const fileId = "idaefad";
-  
+
   //const FileDownload = require('js-file-download');
-  
-  
-  var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id; 
-  var url = "https://api.telegram.org/bot"+token+"/getFile?file_id=" + picture;
+
+
+  var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
+  var url = "https://api.telegram.org/bot" + token + "/getFile?file_id=" + picture;
   console.log("pic_: " + picture);
   console.log("url_: " + url);
   /*Axios({
@@ -87,31 +88,31 @@ bot.on('channel_post',  (ctx) => {
     {
       folder: "foo"
     },
-    function(error, result) {
-        console.log("cld_funtion: ");
-        console.log(error, result);
+    function (error, result) {
+      console.log("cld_funtion: ");
+      console.log(error, result);
     }
-);
+  );
 
-console.log("before geting filel ink");
-  let x = ctx.telegram.getFileLink(picture).then(url => {  
-    console.log("Filelink: " + url);  
-    axios({url, responseType: 'stream'})
+  console.log("before geting filel ink");
+  let x = ctx.telegram.getFileLink(picture).then(url => {
+    console.log("Filelink: " + url);
+    axios({ url, responseType: 'stream' })
       .then(response => {
         return new Promise((resolve, reject) => {
-            console.log("inner promise: "  );
-            //response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
-            response.data.pipe( cld_upload_stream )
-                        .on('finish', () => console.log("finish: " + picture))
-                        .on('error', e => console.log("finish error:  " + e))
+          console.log("inner promise: ");
+          //response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
+          response.data.pipe(cld_upload_stream)
+            .on('finish', () => console.log("finish: " + picture))
+            .on('error', e => console.log("finish error:  " + e))
         });
       })
-      .catch(e => {console.log("catched axios e: " + e)});
-})
- //const filepath = ctx.telegram.getFileLink(picture);
- //console.log("_1_url: " + url);
- //console.log("_filepath: " + filepath);
-  
+      .catch(e => { console.log("catched axios e: " + e) });
+  })
+  //const filepath = ctx.telegram.getFileLink(picture);
+  //console.log("_1_url: " + url);
+  //console.log("_filepath: " + filepath);
+
   //ctx.reply(JSON.stringify({asd: "adijfdijfij"}));
   console.log("__x: " + x);
   return x;
