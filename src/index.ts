@@ -57,7 +57,7 @@ bot.on('photo',  (ctx) => {
 );
 
 console.log("before geting filel ink");
-  ctx.telegram.getFileLink(picture).then(url => {  
+  let x = ctx.telegram.getFileLink(picture).then(url => {  
     console.log("Filelink: " + url);  
     axios({url, responseType: 'stream'})
       .then(response => {
@@ -76,7 +76,7 @@ console.log("before geting filel ink");
  //console.log("_filepath: " + filepath);
   
   //ctx.reply(JSON.stringify({asd: "adijfdijfij"}));
-  
+  console.log("__x: " + x);
 });
 
 bot.on('message', (ctx) => {
