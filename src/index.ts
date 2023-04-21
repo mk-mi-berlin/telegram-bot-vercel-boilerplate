@@ -50,21 +50,23 @@ bot.on('photo',  (ctx) => {
       folder: "foo"
     },
     function(error, result) {
-        console.log("cld_error: ");
+        console.log("cld_funtion: ");
         console.log(error, result);
     }
 );
 
 
   ctx.telegram.getFileLink(picture).then(url => {    
-    Axios({url, responseType: 'stream'}).then(response => {
+    Axios({url, responseType: 'stream'})
+      .then(response => {
         return new Promise((resolve, reject) => {
-            //response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
-            response.data.pipe( cld_upload_stream )
+            response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
+            //response.data.pipe( cld_upload_stream )
                         .on('finish', () => console.log("finish: " + picture))
                         .on('error', e => console.log("finish error:  " + e))
-                });
-            })
+        });
+      })
+      .catch(e => {console.log("catched axios e: " + e)});
 })
  //const filepath = ctx.telegram.getFileLink(picture);
  console.log("_1_url: " + url);
