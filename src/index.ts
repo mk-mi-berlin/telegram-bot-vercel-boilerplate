@@ -1,4 +1,4 @@
-import { Telegraf } from 'telegraf';
+import { Context, Telegraf } from 'telegraf';
 
 import { about } from './commands';
 import { greeting } from './text';
@@ -23,11 +23,48 @@ cloudinary.config({
 });
 const token = process.env.BOT_TOKEN;
 
-bot.command('about', about());
+//bot.command('about', about());
+
+const storePhoto = (ctx) => async (ctx2: Context) => {
+  //const message = `*${name} ${version}*\n${author}`;
+  //debug(`Triggered "about" command with message \n${message}`);
+  //await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown' });
+  var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id; 
+  var url = "https://api.telegram.org/bot"+token+"/getFile?file_id=" + picture;
+  let cld_upload_stream = cloudinary.uploader.upload_stream(
+    {
+      folder: "foo"
+    },
+    function(error, result) {
+        console.log("cld_funtion: ");
+        console.log(error, result);
+    }
+);
+let x = await ctx.telegram.getFileLink(picture).then(url => {  
+  console.log("Filelink: " + url);  
+  axios({url, responseType: 'stream'})
+    .then(response => {
+      return new Promise((resolve, reject) => {
+          console.log("inner promise: "  );
+          //response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
+          response.data.pipe( cld_upload_stream )
+                      .on('finish', () => console.log("finish: " + picture))
+                      .on('error', e => console.log("finish error:  " + e))
+      });
+    })
+    .catch(e => {console.log("catched axios e: " + e)});
+})
+};
+
+export { about };
 
 bot.on('photo',  (ctx) => {
+  storePhoto(ctx);
+});
+
+bot.on('channel_post',  (ctx) => {
   //console.log(JSON.stringify(ctx.update.message.photo.pop()));
-  const fileId = "idaefad";
+  //const fileId = "idaefad";
   
   //const FileDownload = require('js-file-download');
   
@@ -77,6 +114,7 @@ console.log("before geting filel ink");
   
   //ctx.reply(JSON.stringify({asd: "adijfdijfij"}));
   console.log("__x: " + x);
+  return x;
 });
 
 bot.on('message', (ctx) => {
