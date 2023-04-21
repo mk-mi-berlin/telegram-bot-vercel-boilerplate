@@ -33,7 +33,8 @@ bot.on('photo',  (ctx) => {
   const token = process.env.BOT_TOKEN;
   var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id; 
   var url = "https://api.telegram.org/bot"+token+"/getFile?file_id=" + picture;
-  console.log("pic " + picture);
+  console.log("pic: " + picture);
+  console.log("url: " + url);
   /*Axios({
     url: url,
     method: 'GET',
@@ -49,6 +50,7 @@ bot.on('photo',  (ctx) => {
       folder: "foo"
     },
     function(error, result) {
+        console.log("cld_error: ");
         console.log(error, result);
     }
 );
