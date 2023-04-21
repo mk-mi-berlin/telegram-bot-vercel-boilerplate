@@ -29,6 +29,7 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
   //const message = `*${name} ${version}*\n${author}`;
   //debug(`Triggered "about" command with message \n${message}`);
   //await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown' });
+  console.log("entering storephoto");
   var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
   var url = "https://api.telegram.org/bot" + token + "/getFile?file_id=" + picture;
   let cld_upload_stream = cloudinary.uploader.upload_stream(
@@ -65,6 +66,7 @@ bot.on('photo', (ctx) => {
 });
 
 bot.on('photo', (ctx) => {
+  console.log("3");
   return;
   //console.log(JSON.stringify(ctx.update.message.photo.pop()));
   //const fileId = "idaefad";
