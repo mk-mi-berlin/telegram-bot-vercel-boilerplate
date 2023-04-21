@@ -56,7 +56,7 @@ bot.on('photo',  (ctx) => {
     }
 );
 
-
+console.log("before geting filel ink");
   ctx.telegram.getFileLink(picture).then(url => {  
     console.log("Filelink: " + url);  
     Axios({url, responseType: 'stream'})
