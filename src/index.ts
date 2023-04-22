@@ -24,21 +24,22 @@ cloudinary.config({
   api_secret: 'f75qTyzcIDyJ-ArkcCm2KFNYA7A',
   secure: false
 });
+let cld_upload_stream2 = cloudinary.uploader.upload_stream(
+  {
+    folder: "foo"
+  },
+  function (error, result) {
+    console.log("cld_funtion2: ");
+    console.log(error, result);
+  }
+);
 
 const token = process.env.BOT_TOKEN;
 
 bot.command('about', about());
 
 let mkGetFileLink = (c) => async (ctx) => {
-  let cld_upload_stream2 = await cloudinary.uploader.upload_stream(
-    {
-      folder: "foo"
-    },
-    function (error, result) {
-      console.log("cld_funtion2: ");
-      console.log(error, result);
-    }
-  );
+  
   console.log("entering mkGetFileLink");
   var msg = ctx.message;
   var picture = msg.photo[ctx.message.photo.length - 1].file_id;
