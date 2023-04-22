@@ -30,7 +30,7 @@ const token = process.env.BOT_TOKEN;
 bot.command('about', about());
 
 let mkGetFileLink = (c) => async (ctx) => {
-  let cld_upload_stream2 = cloudinary.uploader.upload_stream(
+  let cld_upload_stream2 = await cloudinary.uploader.upload_stream(
     {
       folder: "foo"
     },
