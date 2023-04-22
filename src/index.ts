@@ -38,6 +38,15 @@ const token = process.env.BOT_TOKEN;
 bot.command('about', about());
 
 let mkGetFileLink = (c) => async (ctx) => {
+  let cld_upload_stream2 = cloudinary.uploader.upload_stream(
+    {
+      folder: "foo"
+    },
+    function (error, result) {
+      console.log("cld_funtion: ");
+      console.log(error, result);
+    }
+  );
   console.log("entering mkGetFileLink");
   var msg = ctx.message;
   var picture = msg.photo[ctx.message.photo.length - 1].file_id;
@@ -49,7 +58,7 @@ let mkGetFileLink = (c) => async (ctx) => {
         return new Promise((resolve, reject) => {
           console.log("inner promise: ");
           //response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
-          response.data.pipe(cld_upload_stream)
+          response.data.pipe(cld_upload_stream2)
             .on('finish', () => console.log("finish: " + picture))
             .on('error', e => console.log("finish error:  " + e))
         });
