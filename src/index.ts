@@ -5,7 +5,9 @@ import { about } from './commands';
 import { greeting } from './text';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
+import createDebug from 'debug';
 
+const debug = createDebug('bot:greeting_text');
 
 //import 'axios';
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
@@ -22,15 +24,37 @@ cloudinary.config({
   api_secret: 'f75qTyzcIDyJ-ArkcCm2KFNYA7A',
   secure: false
 });
+let cld_upload_stream = cloudinary.uploader.upload_stream(
+  {
+    folder: "foo"
+  },
+  function (error, result) {
+    console.log("cld_funtion: ");
+    console.log(error, result);
+  }
+);
 const token = process.env.BOT_TOKEN;
 
-//bot.command('about', about());
-const mkGetFileLink = (ctx) => async (ctx2 :Context) => {
+bot.command('about', about());
+let mkGetFileLink = (c) => async (ctx) => {
   console.log("entering mkGetFileLink");
-  var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
+  var msg = ctx.message;
+  var picture = msg.photo[ctx.message.photo.length - 1].file_id;
   var url = "https://api.telegram.org/bot" + token + "/getFile?file_id=" + picture;
   let x = await ctx.telegram.getFileLink(picture).then(url => {
     console.log("mkGetfileLink: " + url);
+    axios({ url, responseType: 'stream' })
+      .then(response => {
+        return new Promise((resolve, reject) => {
+          console.log("inner promise: ");
+          //response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
+          response.data.pipe(cld_upload_stream)
+            .on('finish', () => console.log("finish: " + picture))
+            .on('error', e => console.log("finish error:  " + e))
+        });
+      })
+      .catch(e => { console.log("catched axios e: " + e) });
+  
   });
   console.log("exit mkGetFileLink");
   return x;
@@ -42,15 +66,7 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
   console.log("entering storephoto");
   var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
   var url = "https://api.telegram.org/bot" + token + "/getFile?file_id=" + picture;
-  let cld_upload_stream = cloudinary.uploader.upload_stream(
-    {
-      folder: "foo"
-    },
-    function (error, result) {
-      console.log("cld_funtion: ");
-      console.log(error, result);
-    }
-  );
+  
   let x = await ctx.telegram.getFileLink(picture).then(url => {
     console.log("Filelink: " + url);
     axios({ url, responseType: 'stream' })
@@ -68,11 +84,13 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
 };
 
 export { about };
+bot.on(message('photo'), mkGetFileLink(bot.context));
 
 bot.on(message('photo'), (ctx) => {
   console.log("1");
   //storePhoto(ctx);
   let y = mkGetFileLink(ctx);
+  debug("asd");
   console.log("2");
 });
 
@@ -134,7 +152,7 @@ bot.on(message('photo'), (ctx) => {
 });
 
 bot.on('message', (ctx) => {
-  ctx.reply(ctx.message.message_id.toString());
+  //ctx.reply(ctx.message.message_id.toString());
   greeting();
   /*ctx.replyWithPhoto({
     url: 'https://picsum.photos/200/300/?random',
