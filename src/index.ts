@@ -46,7 +46,7 @@ let mkGetFileLink = (c) => async (ctx) => {
   var url = "https://api.telegram.org/bot" + token + "/getFile?file_id=" + picture;
   let x = await ctx.telegram.getFileLink(picture).then(url => {
     console.log("mkGetfileLink: " + url);
-    axios({ url, responseType: 'stream' })
+    /*axios({ url, responseType: 'stream' })
       .then(response => {
         return new Promise((resolve, reject) => {
           console.log("inner promise: ");
@@ -57,8 +57,9 @@ let mkGetFileLink = (c) => async (ctx) => {
         });
       })
       .catch(e => { console.log("catched axios e: " + e) });
-
+*/
   });
+
   console.log("exit mkGetFileLink");
   return x;
 }
