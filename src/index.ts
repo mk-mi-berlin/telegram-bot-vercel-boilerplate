@@ -1,4 +1,5 @@
 import { Context, Telegraf } from 'telegraf';
+import { message } from 'telegraf/filters';
 
 import { about } from './commands';
 import { greeting } from './text';
@@ -59,13 +60,13 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
 
 export { about };
 
-bot.on('photo', (ctx) => {
+bot.on(message('photo'), (ctx) => {
   console.log("1");
   storePhoto(ctx);
   console.log("2");
 });
 
-bot.on('photo', (ctx) => {
+bot.on(message('photo'), (ctx) => {
   console.log("3");
   return;
   //console.log(JSON.stringify(ctx.update.message.photo.pop()));
