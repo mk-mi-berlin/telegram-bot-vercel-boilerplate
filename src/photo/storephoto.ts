@@ -17,7 +17,7 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
         reply_to_message_id: messageId,
     });
 
-const storephoto = (ctx) => async (ctx2) => {
+const storephoto = () => async (ctx2) => {
     debug('Triggered "storephoto" text command');
     console.log("storephoto111");
     let cld_upload_stream = cloudinary.uploader.upload_stream(
