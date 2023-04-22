@@ -39,7 +39,7 @@ const token = process.env.BOT_TOKEN;
 
 bot.command('about', about());
 
-let mkGetFileLink = () => async (ctx) => {
+let mkGetFileLink = (c) => async (ctx) => {
   
   console.log("entering mkGetFileLink");
   var msg = ctx.message;
