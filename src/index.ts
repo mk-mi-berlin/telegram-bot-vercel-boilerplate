@@ -97,7 +97,7 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
   })
 };
 
-export { about };
+//export { about };
 bot.on(message('photo'), mkGetFileLink(bot.context));
 //bot.on(message('photo'), storePhoto(bot.context));
 

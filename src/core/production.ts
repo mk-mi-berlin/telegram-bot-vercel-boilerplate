@@ -21,7 +21,7 @@ const production = async (
   }
 
   const getWebhookInfo = await bot.telegram.getWebhookInfo();
-  console.log("webhookinfo: " + JSON.stringify(getWebhookInfo));
+  //console.log("webhookinfo: " + JSON.stringify(getWebhookInfo));
   if (getWebhookInfo.url !== VERCEL_URL + '/api') {
     debug(`deleting webhook ${VERCEL_URL}`);
     await bot.telegram.deleteWebhook();
@@ -31,7 +31,7 @@ const production = async (
 
   if (req.method === 'POST') {
     debug("method is post");    
-    console.log("methoid is post");
+    //console.log("methoid is post");
     await bot.handleUpdate(req.body as unknown as Update, res);
   } else {
     res.status(200).json('Listening to bot events...');

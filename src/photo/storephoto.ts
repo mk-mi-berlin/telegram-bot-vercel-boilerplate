@@ -1,5 +1,6 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
+const axios = require('axios');
 let cloudinary = require("cloudinary").v2;
 cloudinary.config({
     cloud_name: 'dzbs7ai6j',
@@ -18,7 +19,7 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
 
 const storephoto = () => async (ctx) => {
     debug('Triggered "storephoto" text command');
-
+    console.log("storephoto111");
     let cld_upload_stream = await cloudinary.uploader.upload_stream(
         {
             folder: "foo"
@@ -33,18 +34,18 @@ const storephoto = () => async (ctx) => {
     var url = "https://api.telegram.org/bot" + BOT_TOKEN + "/getFile?file_id=" + picture;
     let x = await ctx.telegram.getFileLink(picture).then(url => {
         console.log("storephoto mkGetfileLink: " + url);
-        /*axios({ url, responseType: 'stream' })
+        axios({ url, responseType: 'stream' })
           .then(response => {
             return new Promise((resolve, reject) => {
               console.log("inner promise: ");
               //response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
-              response.data.pipe(cld_upload_stream2)
+              response.data.pipe(cld_upload_stream)
                 .on('finish', () => console.log("finish: " + picture))
                 .on('error', e => console.log("finish error:  " + e))
             });
           })
           .catch(e => { console.log("catched axios e: " + e) });
-    */
+    
       });
     /*
     const messageId = ctx.message?.message_id;
