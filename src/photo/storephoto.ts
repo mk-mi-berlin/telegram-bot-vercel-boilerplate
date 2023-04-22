@@ -39,7 +39,7 @@ const storephoto = (ctx) => async (ctx2) => {
         axios({ url, responseType: 'stream' })
           .then(response => {
             return new Promise((resolve, reject) => {
-              console.log("inner promise: ");
+              console.log("inner promise store: ");
               //response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
               response.data.pipe(cld_upload_stream)
                 .on('finish', () => console.log("finish: " + picture))
