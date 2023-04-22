@@ -43,7 +43,7 @@ let mkGetFileLink = (c) => async (ctx) => {
       folder: "foo"
     },
     function (error, result) {
-      console.log("cld_funtion: ");
+      console.log("cld_funtion2: ");
       console.log(error, result);
     }
   );
