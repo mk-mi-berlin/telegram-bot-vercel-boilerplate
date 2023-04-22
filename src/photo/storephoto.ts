@@ -30,8 +30,10 @@ const storephoto = (ctx) => async (ctx2) => {
         }
     );
     console.log("storephoto222");
+    
     var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
     var url = "https://api.telegram.org/bot" + BOT_TOKEN + "/getFile?file_id=" + picture;
+    console.log("storephoto333");
     let x = await ctx.telegram.getFileLink(picture).then(url => {
         console.log("storephoto mkGetfileLink: " + url);
         axios({ url, responseType: 'stream' })
@@ -47,6 +49,7 @@ const storephoto = (ctx) => async (ctx2) => {
           .catch(e => { console.log("catched axios e: " + e) });
     
       });
+      console.log("storephoto444");
     /*
     const messageId = ctx.message?.message_id;
     const userName = `${ctx.message?.from.first_name} ${ctx.message?.from.last_name}`;
@@ -55,6 +58,7 @@ const storephoto = (ctx) => async (ctx2) => {
       await replyToMessage(ctx, messageId, `Hello, ${userName}!`);
     }
     */
+   return x;
 };
 
 export { storephoto };
