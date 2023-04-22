@@ -24,15 +24,7 @@ cloudinary.config({
   api_secret: 'f75qTyzcIDyJ-ArkcCm2KFNYA7A',
   secure: false
 });
-let cld_upload_stream = cloudinary.uploader.upload_stream(
-  {
-    folder: "foo"
-  },
-  function (error, result) {
-    console.log("cld_funtion1: ");
-    console.log(error, result);
-  }
-);
+
 const token = process.env.BOT_TOKEN;
 
 bot.command('about', about());
@@ -73,6 +65,15 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
   //const message = `*${name} ${version}*\n${author}`;
   //debug(`Triggered "about" command with message \n${message}`);
   //await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown' });
+  let cld_upload_stream = cloudinary.uploader.upload_stream(
+    {
+      folder: "foo"
+    },
+    function (error, result) {
+      console.log("cld_funtion1: ");
+      console.log(error, result);
+    }
+  );
   console.log("entering storephoto");
   var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
   var url = "https://api.telegram.org/bot" + token + "/getFile?file_id=" + picture;
