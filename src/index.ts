@@ -64,6 +64,7 @@ let mkGetFileLink = (c) => async (ctx) => {
   console.log("exit mkGetFileLink");
   return x;
 }
+/*
 const storePhoto = (ctx) => async (ctx2: Context) => {
   //const message = `*${name} ${version}*\n${author}`;
   //debug(`Triggered "about" command with message \n${message}`);
@@ -96,10 +97,10 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
       .catch(e => { console.log("catched axios e: " + e) });
   })
 };
-
+*/
 //export { about };
-bot.on(message('photo'), mkGetFileLink(bot.context));
-//bot.on(message('photo'), storePhoto(bot.context));
+//bot.on(message('photo'), mkGetFileLink(bot.context));
+bot.on(message('photo'), storephoto(bot.context));
 
 /*
 bot.on(message('photo'), (ctx) => {
