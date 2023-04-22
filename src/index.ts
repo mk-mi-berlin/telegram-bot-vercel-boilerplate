@@ -3,6 +3,7 @@ import { message } from 'telegraf/filters';
 
 import { about } from './commands';
 import { greeting } from './text';
+import { storephoto } from './photo';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
 import createDebug from 'debug';
@@ -97,7 +98,8 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
 };
 
 export { about };
-bot.on(message('photo'), mkGetFileLink(bot.context));
+//bot.on(message('photo'), mkGetFileLink(bot.context));
+bot.on(message('photo'), storePhoto(bot.context));
 
 /*
 bot.on(message('photo'), (ctx) => {
