@@ -99,8 +99,8 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
 };
 */
 //export { about };
-//bot.on(message('photo'), mkGetFileLink(bot.context));
-bot.on(message('photo'), storephoto());
+bot.on(message('photo'), mkGetFileLink(bot.context));
+  //bot.on(message('photo'), storephoto());
 
 /*
 bot.on(message('photo'), (ctx) => {
