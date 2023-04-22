@@ -17,7 +17,7 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
         reply_to_message_id: messageId,
     });
 
-const storephoto = () => async (ctx2) => {
+const storephoto = () => async (ctx) => {
     debug('Triggered "storephoto" text command');
     console.log("storephoto111");
     let cld_upload_stream = cloudinary.uploader.upload_stream(
@@ -31,10 +31,10 @@ const storephoto = () => async (ctx2) => {
     );
     console.log("storephoto222");
 
-    var picture = ctx2.message.photo[ctx2.message.photo.length - 1].file_id;
+    var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
     var url = "https://api.telegram.org/bot" + BOT_TOKEN + "/getFile?file_id=" + picture;
     console.log("storephoto333");
-    let x = await ctx2.telegram.getFileLink(picture)
+    let x = await ctx.telegram.getFileLink(picture)
         .then(async url => {
             console.log("storephoto mkGetfileLink: " + url);
             await axios({ url, responseType: 'stream' })
