@@ -25,7 +25,15 @@ cloudinary.config({
 const token = process.env.BOT_TOKEN;
 
 //bot.command('about', about());
-
+const mkGetFileLink = (ctx) =>async (ctx2 :Context) => {
+  console.log("entering mkGetFileLink");
+  var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
+  var url = "https://api.telegram.org/bot" + token + "/getFile?file_id=" + picture;
+  let x = await ctx.telegram.getFileLink(picture).then(url => {
+    console.log("mkGetfileLink: " + url);
+  });
+  console.log("exit mkGetFileLink");
+}
 const storePhoto = (ctx) => async (ctx2: Context) => {
   //const message = `*${name} ${version}*\n${author}`;
   //debug(`Triggered "about" command with message \n${message}`);
@@ -62,7 +70,8 @@ export { about };
 
 bot.on(message('photo'), (ctx) => {
   console.log("1");
-  storePhoto(ctx);
+  //storePhoto(ctx);
+  mkGetFileLink(ctx);
   console.log("2");
 });
 
