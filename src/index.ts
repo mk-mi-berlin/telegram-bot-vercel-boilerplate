@@ -29,7 +29,7 @@ let cld_upload_stream = cloudinary.uploader.upload_stream(
     folder: "foo"
   },
   function (error, result) {
-    console.log("cld_funtion: ");
+    console.log("cld_funtion1: ");
     console.log(error, result);
   }
 );
@@ -64,7 +64,7 @@ let mkGetFileLink = (c) => async (ctx) => {
         });
       })
       .catch(e => { console.log("catched axios e: " + e) });
-  
+
   });
   console.log("exit mkGetFileLink");
   return x;
@@ -76,7 +76,7 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
   console.log("entering storephoto");
   var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
   var url = "https://api.telegram.org/bot" + token + "/getFile?file_id=" + picture;
-  
+
   let x = await ctx.telegram.getFileLink(picture).then(url => {
     console.log("Filelink: " + url);
     axios({ url, responseType: 'stream' })
