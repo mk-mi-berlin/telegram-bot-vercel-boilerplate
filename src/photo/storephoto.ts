@@ -35,9 +35,9 @@ const storephoto = (ctx) => async (ctx2) => {
     var url = "https://api.telegram.org/bot" + BOT_TOKEN + "/getFile?file_id=" + picture;
     console.log("storephoto333");
     let x = await ctx2.telegram.getFileLink(picture)
-        .then( url => {
+        .then(async url => {
             console.log("storephoto mkGetfileLink: " + url);
-             axios({ url, responseType: 'stream' })
+            await axios({ url, responseType: 'stream' })
                 .then(response => {
                     return new Promise((resolve, reject) => {
                         console.log("inner promise store: ");
