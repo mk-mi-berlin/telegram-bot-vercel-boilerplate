@@ -36,6 +36,7 @@ let cld_upload_stream = cloudinary.uploader.upload_stream(
 const token = process.env.BOT_TOKEN;
 
 bot.command('about', about());
+
 let mkGetFileLink = (c) => async (ctx) => {
   console.log("entering mkGetFileLink");
   var msg = ctx.message;
@@ -86,6 +87,7 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
 export { about };
 bot.on(message('photo'), mkGetFileLink(bot.context));
 
+/*
 bot.on(message('photo'), (ctx) => {
   console.log("1");
   //storePhoto(ctx);
@@ -93,7 +95,8 @@ bot.on(message('photo'), (ctx) => {
   debug("asd");
   console.log("2");
 });
-
+*/
+/*
 bot.on(message('photo'), (ctx) => {
   console.log("3");
   return;
@@ -107,15 +110,7 @@ bot.on(message('photo'), (ctx) => {
   var url = "https://api.telegram.org/bot" + token + "/getFile?file_id=" + picture;
   console.log("pic_: " + picture);
   console.log("url_: " + url);
-  /*Axios({
-    url: url,
-    method: 'GET',
-    responseType: 'blob', // Important
-  }).then((response) => {
-      FileDownload(response.data, '${picture}.jpg');
-      console.log("dl: " + '${picture}.jpg');
-  });
-  */
+  
 
   let cld_upload_stream = cloudinary.uploader.upload_stream(
     {
@@ -150,7 +145,7 @@ bot.on(message('photo'), (ctx) => {
   console.log("__x: " + x);
   return x;
 });
-
+*/
 bot.on('message', (ctx) => {
   //ctx.reply(ctx.message.message_id.toString());
   greeting();
