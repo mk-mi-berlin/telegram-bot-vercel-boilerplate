@@ -20,7 +20,7 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
 const storephoto = (ctx) => async (ctx2) => {
     debug('Triggered "storephoto" text command');
     console.log("storephoto111");
-    let cld_upload_stream = await cloudinary.uploader.upload_stream(
+    let cld_upload_stream = cloudinary.uploader.upload_stream(
         {
             folder: "foo"
         },
@@ -30,26 +30,27 @@ const storephoto = (ctx) => async (ctx2) => {
         }
     );
     console.log("storephoto222");
-    
+
     var picture = ctx2.message.photo[ctx2.message.photo.length - 1].file_id;
     var url = "https://api.telegram.org/bot" + BOT_TOKEN + "/getFile?file_id=" + picture;
     console.log("storephoto333");
-    let x =   ctx2.telegram.getFileLink(picture).then(async url =>  {
-        console.log("storephoto mkGetfileLink: " + url);
-        axios({ url, responseType: 'stream' })
-          .then(response => {
-            return new Promise((resolve, reject) => {
-              console.log("inner promise store: ");
-              //response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
-              response.data.pipe(cld_upload_stream)
-                .on('finish', () => console.log("finish: " + picture))
-                .on('error', e => console.log("finish error:  " + e))
-            });
-          })
-          .catch(e => { console.log("catched axios e: " + e) });
-    
-      });
-      console.log("storephoto444");
+    let x = await ctx2.telegram.getFileLink(picture)
+        .then(async url => {
+            console.log("storephoto mkGetfileLink: " + url);
+            await axios({ url, responseType: 'stream' })
+                .then(response => {
+                    return new Promise((resolve, reject) => {
+                        console.log("inner promise store: ");
+                        //response.data.pipe(fs.createWriteStream(`img/${ctx.update.message.from.id}-${picture}.jpg`))
+                        response.data.pipe(cld_upload_stream)
+                            .on('finish', () => console.log("finish: " + picture))
+                            .on('error', e => console.log("finish error:  " + e))
+                    });
+                })
+                .catch(e => { console.log("catched axios e: " + e) });
+
+        });
+    console.log("storephoto444");
     /*
     const messageId = ctx.message?.message_id;
     const userName = `${ctx.message?.from.first_name} ${ctx.message?.from.last_name}`;
@@ -58,7 +59,7 @@ const storephoto = (ctx) => async (ctx2) => {
       await replyToMessage(ctx, messageId, `Hello, ${userName}!`);
     }
     */
-   return x;
+    return x;
 };
 
 export { storephoto };
