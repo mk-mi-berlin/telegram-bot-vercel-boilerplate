@@ -43,7 +43,7 @@ async function storephoto2(ctx) {
                     let y = await response.data.pipe(cld_upload_stream)
                             .on('finish', () => console.log("finish: " + picture))
                             .on('error', e => console.log("finish error:  " + e));
-                    console.log("store2 f: " + JSON.stringify(y));
+                    console.log("store2 f: " + y);
 
                 })
                 .catch(e => {console.log("store2 axios EXC: " + e)});
