@@ -1,7 +1,7 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
 const axios = require('axios');
-import got from 'got';
+
 
 let cloudinary = require("cloudinary").v2;
 cloudinary.config({
@@ -42,8 +42,8 @@ async function storephoto2(ctx) {
     let x = await ctx.telegram.getFileLink(picture)
         .then(async url => {
             console.log("store2 d: " + url);
-
-            let data = await got(url, {isStream: true});
+            
+            let data = await fetch(url);
             console.log("got: " + data);
             z = await axios({ url, responseType: 'stream' })
                 .then(response => {
