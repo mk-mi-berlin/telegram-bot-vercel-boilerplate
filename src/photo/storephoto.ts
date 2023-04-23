@@ -34,11 +34,16 @@ async function pipe2cloudinary(url: string ) {
         .then(
             res => new Promise((resolve, reject) => {
                 res.body.pipeTo(cld_upload_stream)
-                    .on('finish', () => console.log("finishasd: " + url))
+                    .on('finish', () => {
+                        console.log("finishasd: " + url)
+                        resolve(z);
+                    })
                     .on('error', e => console.log("finishasd error:  " + e));
                 console.log("asdasd");
             })
         )
+        .catch(e => {console.log( "acioasd2EXC: " + e)})
+        return z;
 }
 
 async function storephoto2(ctx) {
