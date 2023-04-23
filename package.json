@@ -12,6 +12,7 @@
     "cloudinary": "^1.36.1",
     "dotenv-cli": "^7.2.1",
     "fs": "^0.0.1-security",
+    "got": "^12.6.0",
     "js-file-download": "^0.4.12",
     "needle": "^3.2.0",
     "telegraf": "^4.12.2"

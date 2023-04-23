@@ -1,6 +1,8 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
 const axios = require('axios');
+import got from 'got';
+
 let cloudinary = require("cloudinary").v2;
 cloudinary.config({
     cloud_name: 'dzbs7ai6j',
@@ -16,6 +18,10 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
     ctx.reply(string, {
         reply_to_message_id: messageId,
     });
+
+async function pipe2cloudinary() {
+
+}
 
 async function storephoto2(ctx) {
     console.log("store2 a");
@@ -37,6 +43,8 @@ async function storephoto2(ctx) {
         .then(async url => {
             console.log("store2 d: " + url);
 
+            let data = await got(url, {isStream: true});
+            console.log("got: " + data);
             z = await axios({ url, responseType: 'stream' })
                 .then(response => {
                     return new Promise((resolve, reject) => {
