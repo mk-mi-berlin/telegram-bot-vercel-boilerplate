@@ -43,8 +43,12 @@ async function storephoto2(ctx) {
         .then(async url => {
             console.log("store2 d: " + url);
             
-            let data = await fetch(url);
-            console.log("got: " + data);
+            let data = await fetch(url)
+                .then(async (response) => {
+                    const reader = response.body.getReader();
+                    console.log("fetch: " + reader);
+                });
+            
             z = await axios({ url, responseType: 'stream' })
                 .then(response => {
                     return new Promise((resolve, reject) => {
@@ -58,6 +62,7 @@ async function storephoto2(ctx) {
                 .catch(e => {console.log("store2 axios EXC: " + e)});
         })
         .catch(e => {console.log("store2 EXC: " + e)});
+        
     return z;
 }
 
