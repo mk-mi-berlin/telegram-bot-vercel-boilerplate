@@ -47,7 +47,7 @@ async function storephoto2(ctx) {
                 .then(async (response) => {
                     const reader = response.body.getReader();
                     console.log("fetch: " + reader);
-                    let u = await response.body.pipeTo(cld_upload_stream);
+                    let u = await response.body.pipeThrough(cld_upload_stream);
                      console.log("u: " + u);   
                 });
             
