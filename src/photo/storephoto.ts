@@ -33,8 +33,20 @@ async function storephoto2(ctx) {
     var url = "https://api.telegram.org/bot" + BOT_TOKEN + "/getFile?file_id=" + picture;
     console.log("store2 c");
     let x = await ctx.telegram.getFileLink(picture)
-        .then(url => {
+        .then(async url => {
             console.log("store2 d: " + url);
+
+            await axios({ url, responseType: 'stream' })
+                .then(response => {
+
+                    console.log("store2 e: ");
+                    response.data.pipe(cld_upload_stream)
+                            .on('finish', () => console.log("finish: " + picture))
+                            .on('error', e => console.log("finish error:  " + e));
+
+
+                })
+                .catch(e => {console.log("store2 axios EXC: " + e)});
         })
         .catch(e => {console.log("store2 EXC: " + e)});
     return x;
