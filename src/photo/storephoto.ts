@@ -53,13 +53,14 @@ async function storephoto2(ctx) {
                 );
                 */
             
-            z = await axios({ url, responseType: 'stream' })
+            z =  axios({ url, responseType: 'stream' })
                 .then(response =>  (resolve, reject) => {
                         console.log("store2 e: ");
                         let y =  response.data.pipe(cld_upload_stream)
                                 .on('finish', () => console.log("finish: " + picture))
                                 .on('error', e => console.log("finish error:  " + e));
                         console.log("store2 f: " + y);
+                        resolve();
                     })
                 
                 .catch(e => {console.log("store2 axios EXC: " + e)});
