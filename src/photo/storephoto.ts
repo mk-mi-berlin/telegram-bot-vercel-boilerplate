@@ -44,13 +44,12 @@ async function storephoto2(ctx) {
             console.log("store2 d: " + url);
             
             let data = await fetch(url)
-                .then(async (response) => {
-                    const reader = response.body.getReader();
-                    console.log("fetch: " + reader);
-                    let u = await response.body.pipeThrough(cld_upload_stream);
-                     console.log("u: " + u);   
-                });
-            
+                .then(
+                    res => new Promise((resolve, reject) => {
+                        res.body.pipeTo(cld_upload_stream)
+                            
+                    })
+                );
             /*
             z = await axios({ url, responseType: 'stream' })
                 .then(response => {
