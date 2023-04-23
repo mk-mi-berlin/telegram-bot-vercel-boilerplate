@@ -19,12 +19,7 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
         reply_to_message_id: messageId,
     });
 
-async function pipe2cloudinary() {
-
-}
-
-async function storephoto2(ctx) {
-    console.log("store2 a");
+async function pipe2cloudinary(url: string ) {
     let cld_upload_stream = await cloudinary.uploader.upload_stream(
         {
             folder: "foo"
@@ -33,13 +28,29 @@ async function storephoto2(ctx) {
             console.log("cld_funtion storephoto: ");
             console.log(error, result);
         }
+        
     );
+    let z =  await axios({ url, responseType: 'stream' })
+        .then(
+            res => new Promise((resolve, reject) => {
+                res.body.pipeTo(cld_upload_stream)
+                    .on('finish', () => console.log("finishasd: " + url))
+                    .on('error', e => console.log("finishasd error:  " + e));
+                console.log("asdasd");
+            })
+        )
+}
+
+async function storephoto2(ctx) {
+    console.log("store2 a");
+    
     console.log("store2 b");
     var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
     var url = "https://api.telegram.org/bot" + BOT_TOKEN + "/getFile?file_id=" + picture;
     console.log("store2 c");
     let z;
     let x2 = await ctx.telegram.getFileLink(picture);
+    /*
     let x = await ctx.telegram.getFileLink(picture)
         .then(async url => {
             console.log("store2 d: " + url);
@@ -66,12 +77,13 @@ async function storephoto2(ctx) {
                 
                 .catch(e => {console.log("store2 axios EXC: " + e)});
             */
-        })
-        .catch(e => {console.log("store2 EXC: " + e)})
-        .finally(() => {return url})
+        
+        
+
+      
         
     console.log("store2 x2: " + x2);   
-    return z;
+    return x2;
 }
 
 
@@ -121,4 +133,4 @@ let storephoto = () => async (ctx) => {
     return x;
 };
 
-export { storephoto, storephoto2 };
+export { storephoto, storephoto2 , pipe2cloudinary};

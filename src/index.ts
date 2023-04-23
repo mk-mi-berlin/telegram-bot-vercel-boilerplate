@@ -3,7 +3,7 @@ import { message } from 'telegraf/filters';
 
 import { about } from './commands';
 import { greeting } from './text';
-import { storephoto2, storephoto } from './photo';
+import { storephoto2, storephoto , pipe2cloudinary} from './photo';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
 import createDebug from 'debug';
@@ -17,15 +17,15 @@ const ENVIRONMENT = process.env.NODE_ENV || '';
 const bot = new Telegraf(BOT_TOKEN);
 const axios = require('axios');
 const fs = require('fs');
-let cloudinary = require("cloudinary").v2;
+let cloudinary2 = require("cloudinary").v2;
 //CLOUDINARY_URL=cloudinary://851821869989418:f75qTyzcIDyJ-ArkcCm2KFNYA7A@dzbs7ai6j
-cloudinary.config({
+cloudinary2.config({
   cloud_name: 'dzbs7ai6j',
   api_key: '851821869989418',
   api_secret: 'f75qTyzcIDyJ-ArkcCm2KFNYA7A',
   secure: false
 });
-let cld_upload_stream2 = cloudinary.uploader.upload_stream(
+let cld_upload_stream2 = cloudinary2.uploader.upload_stream(
   {
     folder: "foo"
   },
@@ -100,7 +100,13 @@ const storePhoto = (ctx) => async (ctx2: Context) => {
 */
 //export { about };
 //bot.on(message('photo'), mkGetFileLink(bot.context));
-bot.on(message('photo'), storephoto2);
+bot.on(message('photo'), async (ctx) => {
+  console.log("asd1");
+  let s1 = await storephoto2(ctx);
+  console.log("asd2 " + s1);
+  let s2 = await pipe2cloudinary(s1);
+  console.log("asd3" + s2);
+});
 
 /*
 bot.on(message('photo'), (ctx) => {
