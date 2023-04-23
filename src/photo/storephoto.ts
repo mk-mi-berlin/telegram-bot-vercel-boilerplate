@@ -52,7 +52,7 @@ async function storephoto2(ctx) {
                     })
                 );
                 */
-            
+            /*
             z =  axios({ url, responseType: 'stream' })
                 .then(response =>  (resolve, reject) => {
                         console.log("store2 e: ");
@@ -64,10 +64,12 @@ async function storephoto2(ctx) {
                     })
                 
                 .catch(e => {console.log("store2 axios EXC: " + e)});
-            
+            */
         })
-        .catch(e => {console.log("store2 EXC: " + e)});
+        .catch(e => {console.log("store2 EXC: " + e)})
+        .finally(() => {return url})
         
+    console.log("store2 x: " + x);   
     return z;
 }
 
