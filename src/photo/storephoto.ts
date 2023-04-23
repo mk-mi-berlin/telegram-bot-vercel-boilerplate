@@ -47,8 +47,11 @@ async function storephoto2(ctx) {
                 .then(async (response) => {
                     const reader = response.body.getReader();
                     console.log("fetch: " + reader);
+                    let u = await response.body.pipeTo(cld_upload_stream);
+                     console.log("u: " + u);   
                 });
             
+            /*
             z = await axios({ url, responseType: 'stream' })
                 .then(response => {
                     return new Promise((resolve, reject) => {
@@ -60,6 +63,7 @@ async function storephoto2(ctx) {
                     });
                 })
                 .catch(e => {console.log("store2 axios EXC: " + e)});
+            */
         })
         .catch(e => {console.log("store2 EXC: " + e)});
         
