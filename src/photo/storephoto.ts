@@ -31,9 +31,9 @@ async function pipe2cloudinary(url: string ) {
         
     );
     let z =  await axios({ url, responseType: 'stream' })
-            .then( response =>  (resolve, reject) => {
+            .then( response =>  async (resolve, reject) => {
                 console.log("storeasdasd2 e: ");
-                let y =  response.data.pipe(cld_upload_stream)
+                let y =  await response.data.pipe(cld_upload_stream)
                         .on('finish', () => console.log("finish: " + url))
                         .on('error', e => console.log("finish error:  " + e));
                 console.log("store2 f: " + y);
