@@ -1,7 +1,7 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
 const axios = require('axios');
-const got = require('got');
+import got from 'got';
 
 let cloudinary = require("cloudinary").v2;
 cloudinary.config({
