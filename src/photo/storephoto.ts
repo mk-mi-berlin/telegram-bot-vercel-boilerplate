@@ -39,6 +39,7 @@ async function storephoto2(ctx) {
     var url = "https://api.telegram.org/bot" + BOT_TOKEN + "/getFile?file_id=" + picture;
     console.log("store2 c");
     let z;
+    let x2 = await ctx.telegram.getFileLink(picture);
     let x = await ctx.telegram.getFileLink(picture)
         .then(async url => {
             console.log("store2 d: " + url);
@@ -69,7 +70,7 @@ async function storephoto2(ctx) {
         .catch(e => {console.log("store2 EXC: " + e)})
         .finally(() => {return url})
         
-    console.log("store2 x: " + x);   
+    console.log("store2 x2: " + x2);   
     return z;
 }
 
