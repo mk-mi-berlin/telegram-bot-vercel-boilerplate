@@ -31,17 +31,14 @@ async function pipe2cloudinary(url: string ) {
         
     );
     let z =  await axios({ url, responseType: 'stream' })
-        .then(
-            res => new Promise((resolve, reject) => {
-                res.body.pipe(cld_upload_stream)
-                    .on('finish', () => {
-                        console.log("finishasd: " + url)
-                        resolve(z);
-                    })
-                    .on('error', e => console.log("finishasd error:  " + e));
-                console.log("asdasd");
+            .then( response =>  (resolve, reject) => {
+                console.log("storeasdasd2 e: ");
+                let y =  response.data.pipe(cld_upload_stream)
+                        .on('finish', () => console.log("finish: " + url))
+                        .on('error', e => console.log("finish error:  " + e));
+                console.log("store2 f: " + y);
+                resolve();
             })
-        )
         .catch(e => {console.log( "acioasd2EXC: " + e)})
         return z;
 }
