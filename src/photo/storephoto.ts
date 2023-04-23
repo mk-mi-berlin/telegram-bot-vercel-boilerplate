@@ -37,14 +37,14 @@ async function storephoto2(ctx) {
             console.log("store2 d: " + url);
 
             await axios({ url, responseType: 'stream' })
-                .then(async response => {
-
+                .then(response => {
+                    return new Promise((resolve, reject) => {
                     console.log("store2 e: ");
-                    let y = await response.data.pipe(cld_upload_stream)
+                    let y = response.data.pipe(cld_upload_stream)
                             .on('finish', () => console.log("finish: " + picture))
                             .on('error', e => console.log("finish error:  " + e));
                     console.log("store2 f: " + y);
-
+                    });
                 })
                 .catch(e => {console.log("store2 axios EXC: " + e)});
         })
