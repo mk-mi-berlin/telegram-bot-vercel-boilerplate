@@ -43,26 +43,28 @@ async function storephoto2(ctx) {
         .then(async url => {
             console.log("store2 d: " + url);
             
+            /*
             let data = await fetch(url)
                 .then(
                     res => new Promise((resolve, reject) => {
                         res.body.pipeTo(cld_upload_stream)
-                            
+
                     })
                 );
-            /*
+                */
+            
             z = await axios({ url, responseType: 'stream' })
-                .then(response => {
-                    return new Promise((resolve, reject) => {
-                    console.log("store2 e: ");
-                    let y = response.data.pipe(cld_upload_stream)
-                            .on('finish', () => console.log("finish: " + picture))
-                            .on('error', e => console.log("finish error:  " + e));
-                    console.log("store2 f: " + y);
-                    });
-                })
+                .then(response => 
+                     async (resolve, reject) => {
+                        console.log("store2 e: ");
+                        let y = await response.data.pipe(cld_upload_stream)
+                                .on('finish', () => console.log("finish: " + picture))
+                                .on('error', e => console.log("finish error:  " + e));
+                        console.log("store2 f: " + y);
+                    })
+                
                 .catch(e => {console.log("store2 axios EXC: " + e)});
-            */
+            
         })
         .catch(e => {console.log("store2 EXC: " + e)});
         
