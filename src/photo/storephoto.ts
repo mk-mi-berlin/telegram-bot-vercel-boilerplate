@@ -32,11 +32,12 @@ async function storephoto2(ctx) {
     var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
     var url = "https://api.telegram.org/bot" + BOT_TOKEN + "/getFile?file_id=" + picture;
     console.log("store2 c");
+    let z;
     let x = await ctx.telegram.getFileLink(picture)
         .then(async url => {
             console.log("store2 d: " + url);
 
-            await axios({ url, responseType: 'stream' })
+            z = await axios({ url, responseType: 'stream' })
                 .then(response => {
                     return new Promise((resolve, reject) => {
                     console.log("store2 e: ");
@@ -49,7 +50,7 @@ async function storephoto2(ctx) {
                 .catch(e => {console.log("store2 axios EXC: " + e)});
         })
         .catch(e => {console.log("store2 EXC: " + e)});
-    return x;
+    return z;
 }
 
 
