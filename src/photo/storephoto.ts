@@ -17,7 +17,31 @@ const replyToMessage = (ctx: Context, messageId: number, string: string) =>
         reply_to_message_id: messageId,
     });
 
-let  storephoto = () => async (ctx) => {
+async function storephoto2(ctx) {
+    console.log("store2 a");
+    let cld_upload_stream = await cloudinary.uploader.upload_stream(
+        {
+            folder: "foo"
+        },
+        function (error, result) {
+            console.log("cld_funtion storephoto: ");
+            console.log(error, result);
+        }
+    );
+    console.log("store2 b");
+    var picture = ctx.message.photo[ctx.message.photo.length - 1].file_id;
+    var url = "https://api.telegram.org/bot" + BOT_TOKEN + "/getFile?file_id=" + picture;
+    console.log("store2 c");
+    let x = await ctx.telegram.getFileLink(picture)
+        .then(url => {
+            console.log("store2 d: " + url);
+        })
+        .catch(e => {console.log("store2 EXC: " + e)});
+    return x;
+}
+
+
+let storephoto = () => async (ctx) => {
     debug('Triggered "storephoto" text command');
     console.log("storephoto111");
     let cld_upload_stream = cloudinary.uploader.upload_stream(
@@ -59,8 +83,8 @@ let  storephoto = () => async (ctx) => {
       await replyToMessage(ctx, messageId, `Hello, ${userName}!`);
     }
     */
-   
+
     return x;
 };
 
-export { storephoto };
+export { storephoto, storephoto2 };
